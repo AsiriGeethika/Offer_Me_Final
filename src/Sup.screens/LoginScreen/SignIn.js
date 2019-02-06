@@ -34,11 +34,10 @@ UserLoginFunction = () =>{
       },
       
       body: JSON.stringify({
-      // usernameOrEmail: usernameOrEmail,
-        //password: password
+      usernameOrEmail: this.state.usernameOrEmail,
+        password: this.state.password
 
-        usernameOrEmail: "lahiru12",
-        password: "g7fgsuvg"
+        
       })
  
 }).then((response) => response.json())
@@ -50,7 +49,7 @@ UserLoginFunction = () =>{
   }
 
   dataHandler(data){
-    // console.log("login data Handler "+data.accessToken);
+    console.log("login data Handler "+data.accessToken);
     this.setasyncToken(data.accessToken);
     this.props.navigation.navigate('SDrawerNav')
   }
@@ -75,7 +74,7 @@ getUserDetails(token){
   console.log("Username or Email :"+usernameOrEmail);
   console.log("password :"+password);
  
-    fetch(`http://10.10.6.39:8080/api/user/${token}`, {
+    fetch(`http://10.10.24.184:8080/api/user/${token}`, {
       method: 'GET',
  
 }).then((response) => response.json())
@@ -126,7 +125,7 @@ async userHandler(data){
         <TouchableOpacity style={styles.button} onPress={this.UserLoginFunction}>
             <Text style={styles.buttonText1}>Sign In</Text>
         </TouchableOpacity>
-        <Button title="Back to Home" onPress={()=>this.props.navigation.navigate('Home')} style={styles.btn}/>
+        <Button title="Back to Home" onPress={()=>this.props.navigation.navigate('HScreen')} style={styles.btn}/>
     </View>           
     </ScrollView>
     );

@@ -3,8 +3,9 @@ import { createMaterialTopTabNavigator, createStackNavigator } from 'react-navig
 import {Icon} from 'native-base';
 import colors from '../../styles/colors';
 import STabScreen1 from '../../Sup.screens/tabscreen/HomeScreen';
-import STabScreen2 from '../../Sup.screens/tabscreen/ProfileScreen';
-import STabScreen3 from '../../Sup.screens/tabscreen/OrdersScreen';
+//import STabScreen2 from '../../Sup.screens/tabscreen/ProfileScreen';
+import SDrawerScreen4 from '../../Sup.screens/tabscreen/OrdersScreen';
+import SDrawerScreen5 from '../../Sup.screens/drawerScreen/Myorder';
 
 
 const TabNavigation = createMaterialTopTabNavigator({
@@ -21,13 +22,13 @@ const TabNavigation = createMaterialTopTabNavigator({
         }
     },
 
-    Profile:{
-        screen:STabScreen2,
+    MyOrder:{
+        screen:SDrawerScreen5,
         navigationOptions: {
             tabBarLabel: "",
             tabBarIcon: ({ tintColor }) => (
                 <Icon
-                    name="ios-person"
+                    name="ios-cart"
                     size={30}
                     color={tintColor} />
             )
@@ -35,7 +36,7 @@ const TabNavigation = createMaterialTopTabNavigator({
     },
 
      MyAds:{
-        screen:STabScreen3,
+        screen:SDrawerScreen4,
         navigationOptions: {
             tabBarLabel: "My Ads",
             tabBarIcon: ({ tintColor }) => (

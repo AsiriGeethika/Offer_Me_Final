@@ -1,78 +1,209 @@
 import React, { Component } from 'react';
-import {View,ScrollView,ImageBackground,Text,StyleSheet,TouchableOpacity} from 'react-native';
-import CustomHeader from '../../components/Header/Header';
+import { PropTypes } from 'prop-types';
+import {View,StyleSheet,Text,Image,ScrollView,TouchableOpacity,ActivityIndicator,AsyncStorage} from 'react-native';
+import {Button,Body,Left,Icon,Right} from "native-base";
+// import CustomImage from './CustomImage';
 
-class STabScreen3 extends Component{
-constructor(props){
-    super(props);
-} 
-     render(){
+
+class SDrawerScreen4 extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            data:null,
+            data1:null,
+            isLoading:true
+            
+        }
+    }
+
+    componentDidMount(){
+      this.getdata()
+        // this.getAllJob()
+        
+    }
+    
+    async getdata(){
+      console.log("I am at token setasyncToken ");
+      try{
+          const data1=await AsyncStorage.getItem("user_details");
+          var dataJson=JSON.parse(data1);
+          console.log(data1,"jbdjhgjshdgjhsgdhja *****");
+          console.log(dataJson,"jbdjhgjshdgjhsgdhja *****");
+          this.setState({
+            data1:dataJson,
+            // isLoading:false
+          })
+          console.log(dataJson.address+" addreess *****");
+          console.log("in state data ",this.state.data1);
+    
+    
+    
+      }catch(error){
+          console.log("in dataHandler login token set ",error);
+      }
+      // this.props.navigation.navigate('SelectItem')
+      this.getAllJob()
+
+    
+      
+     } 
+    getAllJob(){
+     
+        fetch(`http://10.10.24.184:8080/api/item/user/${ this.state.data1.id }`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }    
+        }).then((response) => response.json())
+          .then((res) => {
+            console.log("I am in View Card ",res)
+            this.setState({
+                data:res,
+                isLoading:false
+            })
+            console.log("Set state data hhh ", this.state.data);
+            console.log("Set state isLoading ", this.state.isLoading);
+            })
+            .done();
+      }
+
+      render(){
+        if(this.state.isLoading){
+            return(
+                <View>
+                    <ActivityIndicator size="large" color="red" />
+                </View>
+
+            )
+        }else{
+            console.log("View Card is else");
+            let View_Card=this.state.data.map((val, key)=>{
+        // let View_Card=data.map((val, key)=>{
+            return(
+                // https://ng.jumia.is/YX7Q5y5lIxyzZj5Nmh9wuByrmlM=/fit-in/680x680/filters:fill(white):sharpen(1,0,false):quality(100)/product/95/76869/1.jpg
+                <View key={key} style={styles.col2}  >
+                <Text style={styles.add}>{val.discount}% Off</Text>
+                {/* <CustomImage imageSource={require('./../Images/Shoe.jpg')}/> */}
+                {/* <CustomImage imageSource={require('https://drive.google.com/file/d/1Sa-95G3S_u7IRRuU1N0rrrxBopwv1lpP/view?usp=sharing')}/> */}
+                
+                <Image
+                    style={{width: 50, height: 50}}
+                    source={{uri: val.photoUrl }}
+                />
+                <Text style={styles.item}>{val.name}</Text>
+                {/* str.substring(1, 4); */}
+                <Text>From {val.startDate.substring(0,10)} To {val.endDate.substring(0,10)}</Text>
+                <Text style={styles.add1}>{val.oldPrice}</Text>
+                <Text style={styles.add2}>{val.newPrice}</Text>
+                </View>
+            )
+        })
+    
         return(
-            <ScrollView style={styles.container1}>
-        <CustomHeader/>
-          <ImageBackground source={require('./../../Images/OrderScreen.jpg')} style={styles.banner}>
-              <View style={styles.container}>
-                  <Text style={styles.txt1}>My Offers</Text>
-              </View>
-        </ImageBackground>
-        </ScrollView>  
+            <ScrollView>
+                {View_Card}
+            </ScrollView>
          )
-     }
+        }
+     
+    }
 }
- 
-export default STabScreen3;
-
+export default SDrawerScreen4;
 
 const styles = StyleSheet.create({
-    container1: {
+    container:{
         flex: 1,
-        backgroundColor: '#fff',  
-      },
-      banner:{
-        width: '100%',
-        height: 250,
-        alignItems: 'center',
-        justifyContent: 'center',  
-      },
-      txt1:{
-        fontFamily: 'Cochin',
-        fontSize: 30,
-        color: '#000000',
-        fontWeight: '900',
-      },
-      btn1:{
-        marginTop: 30,
-        marginBottom: 20,
-        marginLeft: 20,
-        marginRight: 20,
-        padding: 5,
-        backgroundColor: 'rgba(166, 239, 30,0.8)',
-      },
-      buttonText:{
-        fontFamily: 'Cochin',
-      fontSize: 16,
-      color: '#000000',
-      fontWeight: 'bold',
-      },
-      cont:{
-        flex: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
         flexDirection: 'row',
-      },
-      container:{
+        flexWrap: 'wrap',
+        padding: 5,
+        backgroundColor: '#0B0943', 
+    },
+    container1:{
         flex: 2,
-          alignItems: 'center',
-          justifyContent: 'center',
-          shadowColor: '#ffccbc',
-          shadowOffset: {width: 0, height: 2},
-          shadowOpacity: 0.8,
-          shadowRadius:3,
-          elevation:1,
-          alignSelf:'center',
-          padding: 25,
-          backgroundColor: 'rgba(166, 239, 30,0.5)',
-          marginBottom: 50,
-          marginTop: 50,
-      },
-    })
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        margin: 5,
+        marginBottom: 5,
+        
+    },
+    container2:{
+        flex: 2,
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        marginBottom: 5,
+        margin: 5, 
+    },
+    col1:{
+      flex: 1,
+      padding:5,
+      borderColor:'#0B0682',
+      borderWidth: 2,
+      marginBottom: 10,
+      width:'100%',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      
+    },
+    col2:{
+      flex: 1,
+      padding:5,
+      borderColor:'#0B0682',
+      borderWidth: 2,
+      marginBottom: 10,
+      width:'100%',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      
+    },
+    contentBanner:{
+        width: '100%',
+        alignItems: 'center',
+        justifyContent:'center',
+        padding: 5,
+    },
+    add:{
+      fontFamily: 'Cochin',
+      fontSize: 30,
+      color: '#fff',
+      fontWeight: 'bold',
+      alignItems: 'flex-start',
+      backgroundColor: '#d50000',
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingBottom: 10,
+      paddingTop:10,
+      marginBottom: 10,
+      marginTop: 5,
+      
+    },
+    add1:{
+      fontFamily: 'Cochin',
+      fontSize: 20,
+      color: '#3E4551',
+      fontWeight: 'bold',
+      textDecorationLine: 'line-through', 
+      textDecorationStyle: 'solid',
+      alignItems: 'center',
+      paddingBottom: 5,
+      
+    },
+    add2:{
+      fontFamily: 'Cochin',
+      fontSize: 20,
+      color: '#d50000',
+      fontWeight: 'bold',
+      alignItems: 'center',
+      paddingBottom: 5,
+    },
+    item:{
+      fontFamily: 'Cochin',
+      fontSize: 18,
+      color: '#1C2331',
+      fontWeight: '500',
+      alignItems: 'center',
+      paddingBottom: 5,
+      marginTop: 10,
+    },
+  
+  });
+  

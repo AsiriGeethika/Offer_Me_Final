@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View,ScrollView,Image,Text,StyleSheet,TouchableOpacity,AsyncStorage} from 'react-native';
+import {View,StyleSheet,Image,Text,Icon,TouchableOpacity,AsyncStorage} from 'react-native';
 import CustomHeader from '../../components/Header/Header';
  
 class STabScreen2 extends Component{
@@ -16,17 +16,19 @@ class STabScreen2 extends Component{
   console.log("cdccdccdccdccdccdcd")
  }
 async getdata(){
+
   console.log("I am at token setasyncToken ");
   try{
       const data=await AsyncStorage.getItem("user_details");
+      
       var dataJson=JSON.parse(data);
-      console.log(data,"jbdjhgjshdgjhsgdhja ***");
-      console.log(dataJson,"jbdjhgjshdgjhsgdhja ***");
+      console.log(data,"jbdjhgjshdgjhsgdhja *****");
+      console.log(dataJson,"jbdjhgjshdgjhsgdhja *****");
       this.setState({
         data:dataJson,
         isLoading:false
       })
-      console.log(dataJson.address+" addreess ***");
+      console.log(dataJson.address+" addreess *****");
       console.log("in state data ",this.state.data);
 
 
@@ -41,7 +43,7 @@ async getdata(){
 
 
      render(){
-       if(this.state.isLoading){
+       if(this.state.isLoading ){
          return(
            <View>
              <Text>Wait</Text>
@@ -50,37 +52,27 @@ async getdata(){
        }
        else{
         return(
-          <ScrollView style={styles.container1}>
-          <CustomHeader/>
-          <View style={styles.cont}>
-              <Text style={styles.txt2}>Profile</Text>
-              <Image source={require('./../../Images/profile.png')} style={styles.banner}/>
-              </View>
-            <View style={styles.container}>
-            {/* Icon: ({ tintColor }) => <Icon name="ios-log-out" size={17} */}
-                <Text style={styles.txt1}>Name:</Text>
-                <Text style={styles.txt1}> {this.state.data.name }</Text>
-            </View>
-            <View style={styles.container}>
-                <Text style={styles.txt1}>Username:</Text>
-                <Text style={styles.txt1}> {this.state.data.username }</Text>
-            </View>
-            <View style={styles.container}>
-                <Text style={styles.txt1}>Address:</Text>
-                <Text style={styles.txt1}> {this.state.data.address }</Text>
-            </View>
-            <View style={styles.container}>
-                <Text style={styles.txt1}>Email:</Text>
-                <Text style={styles.txt1}> {this.state.data.email }</Text>
-            </View>
-            <View style={styles.container}>
-                <Text style={styles.txt1}>Contact No:</Text>
-                <Text style={styles.txt1}> {this.state.data.telephone }</Text>
-            </View>
-            
       
-      
-      </ScrollView>
+      <View style={styles.container}>
+          <View style={styles.header}></View>
+          <Image style={styles.avatar} source={require('./../../Images/profile.png')}/>
+          <View style={styles.body}>
+            <View style={styles.bodyContent}>
+              <Text style={styles.name}>{this.state.data.username }</Text>
+              
+              <Text style={styles.info}>{this.state.data.address }</Text>
+              
+              
+              
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text>{this.state.data.email }</Text>  
+              </TouchableOpacity>              
+              <TouchableOpacity style={styles.buttonContainer}>
+                <Text>{this.state.data.telephone }</Text> 
+              </TouchableOpacity>
+            </View>
+        </View>
+      </View>
        )
        }
         
@@ -88,58 +80,63 @@ async getdata(){
 }
 export default STabScreen2;
 const styles = StyleSheet.create({
-  container1: {
-      flex: 1,
-      backgroundColor: '#fff',  
-    },
-    banner:{
-      width: 200,
-      height: 250,
-      alignItems: 'center',
-      justifyContent: 'center',  
-    },
-    txt1:{
-      fontFamily: 'Cochin',
-      fontSize: 18,
-      color: '#000',
-      fontWeight: '700',
-    },
-    txt2:{
-      fontFamily: 'Cochin',
-      fontSize: 26,
-      color: 'black',
-      fontWeight: '700',
-      marginTop:10,
-    },
-    btn1:{
-      marginTop: 30,
-      marginBottom: 20,
-      marginLeft: 20,
-      marginRight: 20,
-      padding: 5,
-      backgroundColor: 'rgba(234, 162, 162,0.5)',
-
-    },
-    buttonText:{
-      fontFamily: 'Cochin',
-    fontSize: 16,
-    color: '#fff',
-    fontWeight: 'bold',
-    },
-    cont:{
-      flex: 1,
-      alignItems: 'center',
-      
-    },
-      container:{
-        flex: 2,
-        flexDirection:'row',
-        alignItems:'flex-start',
-        justifyContent: 'center',
-        padding: 10,
-        marginBottom: 10,
-        borderColor:'#2196F3'
-        
-      },
-    
+  header:{
+    backgroundColor: "#00BFFF",
+    height:200,
+  },
+  placeIcon: {
+    color: 'white',
+    fontSize: 26,
+  },
+  avatar: {
+    width: 230,
+    height: 230,
+    borderRadius: 100,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom:10,
+    alignSelf:'center',
+    position: 'absolute',
+    marginTop:30
+  },
+  name:{
+    fontSize:22,
+    color:"#FFFFFF",
+    fontWeight:'600',
+  },
+  body:{
+    marginTop:40,
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: 'center',
+    padding:30,
+  },
+  name:{
+    fontSize:28,
+    color: "#696969",
+    fontWeight: "600"
+  },
+  info:{
+    fontSize:16,
+    color: "#00BFFF",
+    marginTop:10
+  },
+  description:{
+    fontSize:16,
+    color: "#696969",
+    marginTop:10,
+    textAlign: 'center'
+  },
+  buttonContainer: {
+    marginTop:10,
+    height:60,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+    backgroundColor: "#00BFFF",
+  },
 });

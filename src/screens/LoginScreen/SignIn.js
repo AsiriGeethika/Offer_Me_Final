@@ -33,11 +33,11 @@ UserLoginFunction = () =>{
       },
       
       body: JSON.stringify({
-        // usernameOrEmail: usernameOrEmail,
-        // password: password
+        usernameOrEmail: usernameOrEmail,
+        password: password
 
-        usernameOrEmail: "Asirigee",
-        password: "Asiri@94"
+        // usernameOrEmail: "Asirigee",
+        // password: "Asiri@94"
       })
  
 }).then((response) => response.json())

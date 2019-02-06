@@ -29,7 +29,7 @@ import STabScreen4 from './src/Sup.screens/tabscreen/Notification';
 import STabScreen3 from './src/Sup.screens/tabscreen/OrdersScreen';
 import STabScreen2 from './src/Sup.screens/tabscreen/ProfileScreen';
 import SDrawerScreen2 from './src/Sup.screens/drawerScreen/AboutUs';
-import SDrawerScreen4 from './src/Sup.screens/drawerScreen/Myorder';
+import SDrawerScreen5 from './src/Sup.screens/drawerScreen/Myorder';
 import SDrawerScreen1 from './src/Sup.screens/drawerScreen/WishList';
 import SDrawerScreen3 from './src/Sup.screens/drawerScreen/Settings';
 import SupRegister from './src/Sup.screens/LoginScreen/Register';
@@ -73,16 +73,19 @@ const AppStackNavigator = createStackNavigator({
   // Other:{screen:Category5},
 
   SHome: {screen:STabScreen1},
+  Sreg:{screen:SupRegister},
+  SSignin:{screen:SSignin},
+  SDrawerNav:{screen:SDrawerNav},
   //Smsg:{screen:STabHScreenScreen4},
   Sorders:{screen:STabScreen3},
   Sprof:{screen:STabScreen2},
   Sabout:{screen:SDrawerScreen2},
-  Scategories:{screen:SDrawerScreen4},
+  Scategories:{screen:SDrawerScreen5},
   Swish: {screen:SDrawerScreen1},
   Ssettings:{screen:SDrawerScreen3},
-  Sreg:{screen:SupRegister},
-  SSignin:{screen:SSignin},
-  SDrawerNav:{screen:SDrawerNav},
+  // Sreg:{screen:SupRegister},
+  // SSignin:{screen:SSignin},
+  // SDrawerNav:{screen:SDrawerNav},
   Ad:{screen:createAd},
   HScreen:{screen:HScreen},
  // simageup:{screen:simageup},

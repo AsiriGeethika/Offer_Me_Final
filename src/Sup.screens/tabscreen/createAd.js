@@ -35,17 +35,46 @@ class createAd extends Component {
         oldPrice: '',
         newPrice: '',
         itemCode: '',
-        rate: '',
+        supplyId: '',
+        supplyName:'',
         discount: '',
         startDate: '',
         endDate: '',
         photoUrl: '',
         categoryId: '',
         loading: false,
-        dp: null
+        dp: null,
+        data: null
        
     }
   }
+  componentDidMount(){
+    this.getdata()
+    console.log("cdccdccdccdccdccdcd")
+   }
+  async getdata(){
+    console.log("I am at token setasyncToken ");
+    try{
+        const data=await AsyncStorage.getItem("user_details");
+        var dataJson=JSON.parse(data);
+        console.log(data,"jbdjhgjshdgjhsgdhja *****");
+        console.log(dataJson,"jbdjhgjshdgjhsgdhja *****");
+        this.setState({
+          data:dataJson,
+          isLoading:false
+        })
+        console.log(dataJson.address+" addreess *****");
+        console.log("in state data ",this.state.data);
+  
+  
+  
+    }catch(error){
+        console.log("in dataHandler login token set ",error);
+    }
+    // this.props.navigation.navigate('SelectItem')
+  
+    
+   } 
   openPicker(){
     this.setState({ loading: true })
     const Blob = RNFetchBlob.polyfill.Blob
@@ -120,8 +149,12 @@ class createAd extends Component {
     })
   }
 UserRegistrationFunction = () =>{
- 
-  fetch('http://10.10.6.39:8080/api/item/addAdvertisment', {
+   var a=((this.state.oldPrice*(100-this.state.discount)/100))
+   this.setState({
+    supplyId: this.state.data.id,
+        supplyName: this.state.data.name,
+  });
+  fetch('http://10.10.24.184:8080/api/item/addAdvertisment', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -131,9 +164,9 @@ UserRegistrationFunction = () =>{
   
         name: this.state.Name,
         oldPrice: this.state.oldPrice,
-        newPrice: this.state.newPrice,
+        newPrice: a,
         itemCode: this.state.itemCode,
-        rate: this.state.rate,
+        rate: 4,
         discount: this.state.discount,
         startDate: this.state.startDate,
         endDate: this.state.endDate,
@@ -166,6 +199,7 @@ UserRegistrationFunction = () =>{
         console.log(data);
         console.log(data._bodyText);
         alert(data._bodyText)
+        this.props.navigation.navigate('SDrawerNav')
       }
 
   render() {
@@ -204,51 +238,43 @@ const dps = this.state.loading ? <ActivityIndicator animating={this.state.loadin
          </Picker>
         </View> 
       </View>
+      <Text style={styles.cat}>Product name</Text>
       <TextInput 
-          placeholder="Name"
+          placeholder="Thouser"
           onChangeText={Name => this.setState({Name : Name})}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
           />
-      <TextInput 
-          placeholder="New price"
-          onChangeText={newPrice => this.setState({newPrice : newPrice})}
-          underlineColorAndroid='transparent'
-          style={styles.TextInputStyleClass}
-          />
- 
+     
+     <Text style={styles.cat}>Old price</Text>
         <TextInput
-          placeholder="Old price"
+          placeholder="ex:3000"
           onChangeText={oldPrice => this.setState({oldPrice : oldPrice})}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
           />
-
+        <Text style={styles.cat}>Discount</Text>
         <TextInput 
-          placeholder="Discount"
+          placeholder="ex:20"
           onChangeText={discount => this.setState({discount : discount})}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
           />
- 
+          <Text style={styles.cat}>Start Date</Text>
         <TextInput
-          placeholder="Start Date"
+          placeholder="ex:2019-01-01"
           onChangeText={startDate => this.setState({startDate : startDate})}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
           />
+          <Text style={styles.cat}>End Date</Text>
           <TextInput
-          placeholder="End Date"
+          placeholder="ex:2019-01-01"
           onChangeText={endDate => this.setState({endDate : endDate})}
           underlineColorAndroid='transparent'
           style={styles.TextInputStyleClass}
           />
-          <TextInput
-          placeholder="rate"
-          onChangeText={rate => this.setState({rate : rate})}
-          underlineColorAndroid='transparent'
-          style={styles.TextInputStyleClass}
-          />
+          <Text style={styles.cat}>Item Code</Text>
           <TextInput
           placeholder="itemCode"
           onChangeText={itemCode => this.setState({itemCode : itemCode})}

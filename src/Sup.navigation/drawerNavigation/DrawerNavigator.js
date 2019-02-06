@@ -6,8 +6,9 @@ import TabNavigator from '../../Sup.navigation/tabNavigation/TabNavigator';
 //import DrawerScreen1 from '../../screens/drawerScreen/WishList'
 import SDrawerScreen2 from '../../Sup.screens/drawerScreen/AboutUs';
 import SDrawerScreen3 from '../../Sup.screens/drawerScreen/Settings'
-import SDrawerScreen4 from '../../Sup.screens/drawerScreen/Myorder';
-import Logout from '../../authScreen/logout/Logout';
+//import SDrawerScreen4 from '../../Sup.screens/drawerScreen/Myorder';
+import STabScreen2 from '../../Sup.screens/tabscreen/ProfileScreen';
+import sLogout from '../../authScreen/logout/sLogout';
 // import { Right } from 'native-base';
 
 const CustomDrawerComponent = (props)=>(
@@ -30,11 +31,11 @@ export default createDrawerNavigator({
       drawerIcon: ({ tintColor }) => <Icon name="home" size={17} />,
     }
   },
-  SDrawerScreen4: {
-    screen: SDrawerScreen4,
+  STabScreen2: {
+    screen: STabScreen2,
     navigationOptions: {
-      drawerLabel: 'Received Orders',
-      drawerIcon: ({ tintColor }) => <Icon name="ios-cart" size={17} />,
+      drawerLabel: 'Profile',
+      drawerIcon: ({ tintColor }) => <Icon name="ios-person" size={17} />,
     }
   },
   SDrawerScreen2: {
@@ -53,7 +54,7 @@ export default createDrawerNavigator({
     }
   },
   Logout: {
-    screen: Logout,
+    screen: sLogout,
     navigationOptions: {
       drawerLabel: 'Log Out',
       drawerIcon: ({ tintColor }) => <Icon name="ios-log-out" size={17} />,
